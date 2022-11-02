@@ -21,6 +21,12 @@ public class Game {
 
     }
 
+    public synchronized void endGame(){
+        for (int i = 0; i < players.length; i++){
+            players[i].setKeepGoing(false);
+        }
+    }
+
     public File getInputFile() {
         return inputFile;
     }
