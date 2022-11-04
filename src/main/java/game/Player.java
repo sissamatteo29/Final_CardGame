@@ -15,6 +15,27 @@ public class Player implements Runnable {
     private Game game;
     private CardDeck takeDeck, giveDeck;
 
+    //Essential constructor
+    public Player(int playerNumber, Game game) {
+        this.playerNumber = playerNumber;
+        this.game = game;
+        hand = new ArrayList<>();
+    }
+
+    public Player(){
+
+    }
+
+    public Player(int playerNumber, ArrayList<Card> hand, int preferredCards, boolean keepGoing, Game game, CardDeck takeDeck, CardDeck giveDeck) {
+        this.playerNumber = playerNumber;
+        this.hand = hand;
+        this.preferredCards = preferredCards;
+        this.keepGoing = keepGoing;
+        this.game = game;
+        this.takeDeck = takeDeck;
+        this.giveDeck = giveDeck;
+    }
+
     @Override
     public void run() {
 
@@ -37,7 +58,7 @@ public class Player implements Runnable {
             }
 
             //In every cycle, we first take a card from the takeDeck
-            newCard = takeDeck.returnTopCard();
+            newCard = takeDeck.retrieveTopCard();
 
             if (newCard.getNumber() == playerNumber){
                 //In this case we need to hold the card and place it at the end of the list
@@ -79,6 +100,22 @@ public class Player implements Runnable {
         return victory;
     }
 
+
+    public CardDeck getTakeDeck() {
+        return takeDeck;
+    }
+
+    public void setTakeDeck(CardDeck takeDeck) {
+        this.takeDeck = takeDeck;
+    }
+
+    public CardDeck getGiveDeck() {
+        return giveDeck;
+    }
+
+    public void setGiveDeck(CardDeck giveDeck) {
+        this.giveDeck = giveDeck;
+    }
 
     public int getPlayerNumber() {
         return playerNumber;

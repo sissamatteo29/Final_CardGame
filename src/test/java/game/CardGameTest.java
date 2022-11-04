@@ -1,12 +1,13 @@
-import game.CardGame;
-import org.junit.jupiter.api.Test;
-import org.junit.platform.commons.util.StringUtils;
+package game;
 
+import game.CardGame;
+import org.junit.Test;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.Assert.assertEquals;
 
 
 public class CardGameTest {

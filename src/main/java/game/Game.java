@@ -17,8 +17,47 @@ public class Game {
         this.inputFile = inputFile;
     }
 
+    public Game(int numberOfPlayers){
+        this.numberOfPlayers = numberOfPlayers;
+    }
+
     public Game(){
 
+    }
+
+    public void createPlayersAndDecks(){
+        players = new Player[numberOfPlayers];
+        decks = new CardDeck[numberOfPlayers];
+        for (int i = 0; i < numberOfPlayers; i++){
+            players[i] = new Player(i + 1, this);
+            decks[i] = new CardDeck(i + 1);
+        }
+    }
+
+    public void distributeCards() {
+        //First distribute 4 cards to each player
+        for (int i = 0; i < 4; i++){
+            for (int j = 0; j < numberOfPlayers; j++){
+                players[j].getHand().add(pack[i * numberOfPlayers + j]);
+            }
+        }
+        //Then we need to fill the Decks
+        for (int i = 0; i < 4; i++){
+            for (int j = 0; j < numberOfPlayers; j++){
+                decks[j].addCard(pack[4 * numberOfPlayers + i * numberOfPlayers + j]);  //just shifted of 4*numberOfPlayers
+            }
+        }
+        //Assign each deck to the respective player
+        for (int i = 0; i < numberOfPlayers; i++){
+            players[i].setTakeDeck(decks[i]);   //the take deck has the same number as the player
+            players[i].setGiveDeck(decks[(i + 1)  % numberOfPlayers]);
+        }
+    }
+
+    public void startThreads() {
+        for(int i = 0; i < numberOfPlayers; i++){
+            new Thread(players[i]).start(); //don't need any reference?
+        }
     }
 
     public synchronized void endGame(){

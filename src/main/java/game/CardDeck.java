@@ -1,6 +1,8 @@
 package game;
 
-import java.util.ArrayDeque;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Represents a card deck in the game
@@ -8,30 +10,34 @@ import java.util.ArrayDeque;
 public class CardDeck {
 
     private int deckNumber;
-    private ArrayDeque<Card> cards = new ArrayDeque<>();
+    private LinkedList<Card> cards;
 
-    /**
-     * Constructs a deck with the given number.
-     * @param deckNumber number of the deck
-     */
-    public CardDeck (int deckNumber){
+    public CardDeck(int deckNumber){
+        //downcasting
+        cards = new LinkedList<Card>();
         this.deckNumber = deckNumber;
     }
+
+    public CardDeck(int deckNumber, LinkedList<Card> deck) {
+        this.deckNumber = deckNumber;
+        this.cards = deck;
+    }
+
 
     /**
      * Returns the top card of the deck
      * @return the top card
      */
-    public Card returnTopCard() {
-        return null;
+    public synchronized Card retrieveTopCard() {
+        return cards.poll();
     }
 
     /**
      * Puts a card at the bottom of the deck
      * @param card the said card
      */
-    public void addCard(Card card) {
-    
+    public synchronized void addCard(Card card) {
+        cards.addFirst(card);
     }
 
     /**
@@ -40,5 +46,21 @@ public class CardDeck {
      */
     public int returnDeckNumber(){
         return this.deckNumber;
+    }
+
+    public int getDeckNumber() {
+        return deckNumber;
+    }
+
+    public void setDeckNumber(int deckNumber) {
+        this.deckNumber = deckNumber;
+    }
+
+    public LinkedList<Card> getCards() {
+        return cards;
+    }
+
+    public void setCards(LinkedList<Card> deck) {
+        this.cards = deck;
     }
 }
