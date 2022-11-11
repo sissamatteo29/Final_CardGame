@@ -71,14 +71,15 @@ public class Player implements Runnable {
 
             //Now we generate a random number to decide which card to discard, without considering the preferred cards
             Random myRandom = new Random();
-            giveDeck.addCard(hand.remove(myRandom.nextInt(0, hand.size() - 1 - preferredCards)));   //remove method returns the object removed
+            giveDeck.giveCard(hand.remove(myRandom.nextInt(0, hand.size() - 1 - preferredCards)));   //remove method returns the object removed
+
         }
     }
 
     /*
         A function that takes all the preferred cards of one hand and puts them at the end of the list
     */
-    private void reorderHand() {
+    public void reorderHand() {
         preferredCards = 0;
         for(int i = 0; i < hand.size() - preferredCards; i++){
             if (hand.get(i).getNumber() == playerNumber){
@@ -89,7 +90,7 @@ public class Player implements Runnable {
         }
     }
 
-    private boolean checkVictory() {
+    public boolean checkVictory() {
         boolean victory = true;
         //Compare the current card number with the successive one
         for (int i = 0; i < hand.size() - 1; i++) {

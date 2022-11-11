@@ -7,7 +7,8 @@ package game;
 public class CardGame{
     public static void main(String[] args) {
         
-        Game game = new Game();
+        new Game().start();
+
 
     }
 }

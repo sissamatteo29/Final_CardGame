@@ -13,7 +13,6 @@ public class CardDeck {
     private LinkedList<Card> cards;
 
     public CardDeck(int deckNumber){
-        //downcasting
         cards = new LinkedList<Card>();
         this.deckNumber = deckNumber;
     }
@@ -22,7 +21,6 @@ public class CardDeck {
         this.deckNumber = deckNumber;
         this.cards = deck;
     }
-
 
     /**
      * Returns the top card of the deck
@@ -36,16 +34,8 @@ public class CardDeck {
      * Puts a card at the bottom of the deck
      * @param card the said card
      */
-    public synchronized void addCard(Card card) {
+    public synchronized void giveCard(Card card) {
         cards.addFirst(card);
-    }
-
-    /**
-     * Returns the number of the deck
-     * @return the number of the deck
-     */
-    public int returnDeckNumber(){
-        return this.deckNumber;
     }
 
     public int getDeckNumber() {

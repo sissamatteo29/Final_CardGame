@@ -11,51 +11,73 @@ public class Game {
     private File inputFile;
 
     Game(){
+
+    }
+
+    public Game (int numberOfPlayers){
+        this.numberOfPlayers = numberOfPlayers;
+    }
+
+    public void start(){
+        askNumberOfPlayers();
+        pack = new Card[8*numberOfPlayers];
+        askFileName();
+        while (!readFile(inputFile.getName())){
+            askFileName();
+        }
+        createPlayersAndDecks();
+        distributeCards();
+        startThreads();
+    }
+
+    public void askNumberOfPlayers(){
         Scanner scanner = new Scanner(System.in);
         while(true) {
             System.out.println("Please enter the number of players: ");
             try {
-                int number = scanner.nextInt();
+                String line = scanner.nextLine();
+                int number = Integer.parseInt(line);
                 if (number > 1) {
                     numberOfPlayers = number;
+                    System.out.println("The game will have " + numberOfPlayers + " players!");
                     break;
                 } else {
                     System.out.println("Number of players must be more than 1.");
                 }
-            } catch (InputMismatchException e) {
-                scanner.nextLine();
+            } catch (NumberFormatException e) {
                 System.out.println("Number of players must be an integer.");
+            } catch (NoSuchElementException e) {
+                return;
             }
         }
+    }
 
-        pack = new Card[8*numberOfPlayers];
+    public void askFileName(){
+        Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.println("Please enter location of pack to load:");
-            String fileName = scanner.next();
+            String fileName = scanner.nextLine();
             File inputFile = new File(fileName);
             if(inputFile.exists()){
-                if (readFile(fileName) == true){
-                    break;
-                }
-                
-            }else if(pack.length != 8 * numberOfPlayers){
-                System.out.println(String.format("The file doesn't have the right number of cards."));
+                this.inputFile = inputFile;
+                System.out.println("Selected file: " + fileName);
+                break;
             }else {
                 System.out.println(String.format("The file doesn't exist."));
             }
         }
-
-        scanner.close();
-        
     }
-    private boolean readFile(String fileName){
+
+    public boolean readFile(String fileName){
         try {
             int index = 0;
             BufferedReader reader = new BufferedReader(new FileReader(fileName));
             while (index < (8 * numberOfPlayers)) {
                 String line = reader.readLine();
                 if (line == null) {
-                    break;
+                    //In this case there are not enough cards so the game cannot start
+                    System.out.println("The file " + fileName + " didn't have enough cards!");
+                    return false;
                 } else {
                     int value = 0;
                     try {
@@ -68,7 +90,7 @@ public class Game {
                             return false;
                         }
                     } catch (NumberFormatException e) {
-                        System.out.println("On line " + (index +1 ) + " there was a wrong format");
+                        System.out.println("On line " + (index + 1) + " there was a wrong format");
                         reader.close();
                         return false;
                     }
@@ -104,7 +126,7 @@ public class Game {
         //Then we need to fill the Decks
         for (int i = 0; i < 4; i++){
             for (int j = 0; j < numberOfPlayers; j++){
-                decks[j].addCard(pack[4 * numberOfPlayers + i * numberOfPlayers + j]);  //just shifted of 4*numberOfPlayers
+                decks[j].giveCard(pack[4 * numberOfPlayers + i * numberOfPlayers + j]);  //just shifted of 4*numberOfPlayers
             }
         }
         //Assign each deck to the respective player

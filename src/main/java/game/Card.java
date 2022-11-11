@@ -7,11 +7,11 @@ import java.util.Objects;
  */
 public class Card {
     //Value of card
-    private int num;
+    private final int num;
 
     /**
      * Constructs card object
-     * @param num card's number
+     * param num card's number
      */
     public Card(int n) {
         this.num = n;
@@ -32,7 +32,6 @@ public class Card {
      */
     @Override
     public boolean equals(Object card) {
-
         //checks if the cards match
         return Objects.equals(this.num, ((Card) card).getNumber());
     }
