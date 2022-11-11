@@ -1,8 +1,6 @@
 package game;
 
-import java.util.Collections;
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Represents a card deck in the game
@@ -13,7 +11,7 @@ public class CardDeck {
     private LinkedList<Card> cards;
 
     public CardDeck(int deckNumber){
-        cards = new LinkedList<Card>();
+        cards = new LinkedList<>();
         this.deckNumber = deckNumber;
     }
 

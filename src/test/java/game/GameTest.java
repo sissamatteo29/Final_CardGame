@@ -168,7 +168,7 @@ public class GameTest {
     public void testAskFileName(){
 
         //Let's test the input with multiple examples, both correct and wrong
-        String numberOfPlayerInput = "Rome\ntt\ncards.txt\nC5\n";
+        String numberOfPlayerInput = "Rome\ntt\ncards1.txt\nC5\n";
         //We create an inputStream to simulate the standard input of the user
         ByteArrayInputStream inputStream = new ByteArrayInputStream(numberOfPlayerInput.getBytes());
         //Save the reference to the standard input
@@ -193,7 +193,7 @@ public class GameTest {
         //We can now split the string into words
         String[] splitResultingString = resultingString.split(" ");
         assertEquals("The initial method to get the user's input for the textfile" +
-                " is not working properly", "cards.txt", splitResultingString[2].strip());
+                " is not working properly", "cards1.txt", splitResultingString[2].strip());
 
         //We set back the standard input and output
         System.setIn(stdin);

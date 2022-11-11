@@ -63,7 +63,7 @@ public class Game {
                 System.out.println("Selected file: " + fileName);
                 break;
             }else {
-                System.out.println(String.format("The file doesn't exist."));
+                System.out.printf("The file %s doesn't exist.%n", fileName);
             }
         }
     }
@@ -77,9 +77,10 @@ public class Game {
                 if (line == null) {
                     //In this case there are not enough cards so the game cannot start
                     System.out.println("The file " + fileName + " didn't have enough cards!");
+                    reader.close();
                     return false;
                 } else {
-                    int value = 0;
+                    int value;
                     try {
                         value = Integer.parseInt(line);
                         if (value > 0) {
@@ -143,8 +144,8 @@ public class Game {
     }
 
     public synchronized void endGame(){
-        for (int i = 0; i < players.length; i++){
-            players[i].setKeepGoing(false);
+        for (Player player : players) {
+            player.setKeepGoing(false);
         }
     }
 
