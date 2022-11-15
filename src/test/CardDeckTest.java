@@ -39,6 +39,23 @@ public class CardDeckTest {
         cardDeck.giveCard(new Card(20));
         assertEquals(20, cardDeck.getCards().get(0).getNumber());
         assertEquals(6, cardDeck.getCards().size());
-
     }
+
+    @Test
+    public void testIsNotEmpty(){
+        CardDeck cardDeck = new CardDeck(1, new LinkedList<>(List.of(new Card(3))));
+        assertTrue(cardDeck.isNotEmpty());
+        cardDeck.setCards(new LinkedList<>());
+        assertFalse(cardDeck.isNotEmpty());
+    }
+
+    @Test
+    public void testGetCardsString(){
+        CardDeck cardDeck = new CardDeck(1, new LinkedList<>(List.of(new Card(3), new Card(4), new Card(5))));
+        assertEquals("3 4 5", cardDeck.getCardsString());
+        cardDeck.setCards(new LinkedList<>());
+        assertEquals("", cardDeck.getCardsString());
+    }
+
+
 }

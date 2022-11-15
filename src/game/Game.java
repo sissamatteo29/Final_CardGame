@@ -15,13 +15,6 @@ public class Game implements GameInterface {
     private CardDeck[] decks;
     private AtomicInteger winner =  new AtomicInteger(0);
 
-    public int returnWinner() {
-        return winner.get();
-    }
-
-    public void compareAndSet(int expected, int value) {
-        winner.compareAndSet(expected, value);
-    }
 
     public void run() {
         askNumberOfPlayers();
@@ -30,11 +23,9 @@ public class Game implements GameInterface {
         while (!readFile(inputFile.getName())){
             askFileName();
         }
-
         createPlayersAndDecks();
         distributeCards();
         startThreads();
-
 
         for (Thread thread: playerThreads) {
             try {
@@ -43,35 +34,16 @@ public class Game implements GameInterface {
         }
 
         for (CardDeckInterface deck: decks){
-            generateLog("deck" + deck.getDeckNumber() + "_output.txt", deck.getCardsString()); 
+            generateLog("deck" + deck.getDeckNumber() + "_output.txt", deck.getCardsString());
         }
 
         System.out.println("player " + winner.get() + " wins!");
-
-    }
-
-    public void stopDeckMonitor() {
-
-        for (CardDeck deck : decks) {
-            synchronized (deck) {
-                deck.notify();
-            }
-        }
-    }
-
-    public void startThreads() {
-        for(int i = 0; i < numberOfPlayers; i++){
-            playerThreads[i] = new Thread(players[i]);
-        }
-        for(Thread player : playerThreads){
-            player.start();
-        }
     }
 
     public void askNumberOfPlayers(){
         Scanner scanner = new Scanner(System.in);
         while(true) {
-            System.out.println("Please enter the number of players: ");
+            System.out.println("Please enter the number of players:");
             try {
                 String line = scanner.nextLine();
                 int number = Integer.parseInt(line);
@@ -135,10 +107,10 @@ public class Game implements GameInterface {
                         reader.close();
                         return false;
                     }
-                    
+
                 }
                 index++;
-                
+
             }
             reader.close();
         } catch (IOException e) {
@@ -154,11 +126,11 @@ public class Game implements GameInterface {
         decks = new CardDeck[numberOfPlayers];
         for (int i = 0; i < numberOfPlayers; i++){
             decks[i] = new CardDeck(i + 1);
-            
+
         }
         for (int i = 0; i < numberOfPlayers; i++){
             players[i] = new Player(i + 1, this);
-            
+
         }
         //Assign each deck to the respective player
         for (int i = 0; i < numberOfPlayers; i++){
@@ -185,13 +157,36 @@ public class Game implements GameInterface {
                 decks[j].giveCard(pack[4 * numberOfPlayers + i * numberOfPlayers + j]);
             }
         }
-
     }
 
-    public void generateLog(String fileName,String log){
+    public void startThreads() {
+        for(int i = 0; i < numberOfPlayers; i++){
+            playerThreads[i] = new Thread(players[i]);
+        }
+        for(Thread player : playerThreads){
+            player.start();
+        }
+    }
+
+    public int returnWinner() {
+        return winner.get();
+    }
+
+    public void compareAndSet(int expected, int value) {
+        winner.compareAndSet(expected, value);
+    }
+
+    public void stopDeckMonitor() {
+        for (CardDeck deck : decks) {
+            synchronized (deck) {
+                deck.notify();
+            }
+        }
+    }
+
+    public void generateLog(String fileName, String log){
         try {
             FileWriter writer = new FileWriter(fileName);
-
             writer.write(log);
             writer.close();
         }catch (IOException e){
@@ -199,25 +194,58 @@ public class Game implements GameInterface {
         }
     }
 
+    @Override
     public File getInputFile() {
         return inputFile;
     }
 
+    @Override
     public void setInputFile(File inputFile) {
         this.inputFile = inputFile;
     }
+
+    public int getNumberOfPlayers() {
+        return numberOfPlayers;
+    }
+
+    public void setNumberOfPlayers(int numberOfPlayers) {
+        this.numberOfPlayers = numberOfPlayers;
+    }
+
+    @Override
     public Card[] getPack() {
         return pack;
     }
 
+    @Override
     public void setPack(Card[] pack) {
         this.pack = pack;
     }
+
+    public Player[] getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(Player[] players) {
+        this.players = players;
+    }
+
+    public Thread[] getPlayerThreads() {
+        return playerThreads;
+    }
+
+    public void setPlayerThreads(Thread[] playerThreads) {
+        this.playerThreads = playerThreads;
+    }
+
+    @Override
     public CardDeck[] getDecks() {
         return decks;
     }
 
+    @Override
     public void setDecks(CardDeck[] decks) {
         this.decks = decks;
     }
+
 }

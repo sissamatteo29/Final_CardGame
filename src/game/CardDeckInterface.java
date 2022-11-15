@@ -2,23 +2,22 @@ package game;
 
 import java.util.LinkedList;
 
-public interface CardDeckInterface {
+    public interface CardDeckInterface {
 
 
-    Card retrieveTopCard();
+        Card retrieveTopCard();
 
-    void giveCard(Card card);
+        void giveCard(Card card);
 
-    int getDeckNumber();
+        int getDeckNumber();
 
-    boolean isNotEmpty();
+        boolean isNotEmpty();
 
-    void setDeckNumber(int deckNumber);
+        void setDeckNumber(int deckNumber);
 
-    LinkedList<Card> getCards();
+        LinkedList<Card> getCards();
 
-    String getCardsString();
+        String getCardsString();
 
-    void setCards(LinkedList<Card> deck);
-}
-
+        void setCards(LinkedList<Card> deck);
+    }

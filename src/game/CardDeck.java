@@ -5,12 +5,12 @@ import java.util.LinkedList;
 /**
  * Represents a card deck in the game
  */
-public class CardDeck implements CardDeckInterface{
+public class CardDeck implements CardDeckInterface {
 
     private int deckNumber;
     private LinkedList<Card> cards;
 
-    public CardDeck(int deckNumber){
+    public CardDeck(int deckNumber) {
         cards = new LinkedList<>();
         this.deckNumber = deckNumber;
     }
@@ -20,35 +20,34 @@ public class CardDeck implements CardDeckInterface{
         this.cards = deck;
     }
 
-    /**
-     * Returns the top card of the deck
-     * @return the top card
-     */
+
     public synchronized Card retrieveTopCard() {
         return cards.poll();
     }
 
-    /**
-     * Puts a card at the bottom of the deck
-     * @param card the said card
-     */
     public synchronized void giveCard(Card card) {
         cards.addFirst(card);
         notify();
     }
-        
-
-    public int getDeckNumber() {
-        return deckNumber;
-    }
 
     public boolean isNotEmpty() {
-        if(cards.size() > 1){
+        if (cards.size() >= 1) {
             return true;
-        }else{
-            return false;
         }
+        return false;
     }
+
+    public String getCardsString() {
+        StringBuilder cardsString = new StringBuilder();
+        for (int i = 0; i < cards.size(); i++) {
+            cardsString.append(cards.get(i).getNumber());
+            if (i != cards.size() - 1) {
+                cardsString.append(" ");
+            }
+        }
+        return cardsString.toString();
+    }
+
 
     public void setDeckNumber(int deckNumber) {
         this.deckNumber = deckNumber;
@@ -58,12 +57,8 @@ public class CardDeck implements CardDeckInterface{
         return cards;
     }
 
-    public String getCardsString(){
-        String cardsString = "";
-        for (Card card : cards) {
-            cardsString += card.getNumber() + " ";
-        }
-        return cardsString;
+    public int getDeckNumber() {
+        return deckNumber;
     }
 
     public void setCards(LinkedList<Card> deck) {

@@ -147,8 +147,6 @@ public class GameTest {
         Game testGame = new Game();
         testGame.askNumberOfPlayers();
 
-        System.setOut(stdout);
-
         //Now we can check if the output is correct
         String resultingString = outputStream.toString();
         System.out.println(resultingString);
@@ -161,6 +159,7 @@ public class GameTest {
                 "is not working properly", "7", splitResultingString[4]);
 
         //We set back the standard input and output
+        System.setOut(stdout);
         System.setIn(stdin);
     }
 
@@ -203,19 +202,29 @@ public class GameTest {
     @Test
     public void testReadFile(){
         //the method readFile needs to have a reference to a game with a certain amount of player and a "pack" vector where it stores the cards
-        Game game = new Game(3);
+        Game game = new Game();
+        game.setNumberOfPlayers(3);
         game.setPack(new Card[3 * 8]);
+
+        //in order to avoid useless logs every time we run the tests, we set the standard output of the process
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(outputStream);
+        PrintStream saveOut = System.out;
+        System.setOut(printStream);
 
         //now we can call the method with the various files created and be sure it returns true or false
         assertFalse(game.readFile(cards1.getName()));
         assertFalse(game.readFile(cards2.getName()));
         assertFalse(game.readFile(cards3.getName()));
         assertTrue(game.readFile(cards4.getName()));
+
+        System.setOut(saveOut);
     }
 
     @Test
     public void testCreatePlayersAndDecks() {
-        Game trialGame = new Game(4);
+        Game trialGame = new Game();
+        trialGame.setNumberOfPlayers(4);
         trialGame.createPlayersAndDecks();
         assertNotEquals(trialGame.getPlayers()[3], null);
         assertNotEquals(trialGame.getPlayers()[0], null);
@@ -261,18 +270,19 @@ public class GameTest {
         assertEquals(8, myTestGame2.getDecks()[0].getCards().get(3).getNumber());
     }
 
-
-
     @Test
-    public void startThreads() {
-    }
+    public void testGenerateLog() throws Exception {
+        Game game = new Game();
+        File testGenerateLog = new File("testGenerateLog.txt");
+        try {
+            testGenerateLog.createNewFile();
+            game.generateLog("testGenerateLog.txt", "Hello World!");
+        } catch (Exception e){
+            System.out.println("Test testGenerateLog has failed to" +
+                    " create the file or something went wrong with the generateLog method in the Game class");
+            throw new Exception();
+        }
 
-    @Test
-    public void endGame() {
-    }
-
-    @Test
-    public void winner() {
     }
 
     @AfterClass
