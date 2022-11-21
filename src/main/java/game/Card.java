@@ -8,15 +8,14 @@ public class Card {
     private final int num;
 
     /**
-     * Constructs card object
-     * param num card's number
+     * Sets the number of the card
      */
     public Card(int n) {
         this.num = n;
     }
 
     /**
-     * Gets the card's value
+     * Returns the card's value
      * @return the card's number
      */
     public int getNumber() {
