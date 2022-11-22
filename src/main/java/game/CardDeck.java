@@ -5,7 +5,7 @@ import java.util.LinkedList;
 /**
  * Represents a card deck in the game.
  */
-public class CardDeck implements CardDeckInterface {
+public class CardDeck {
 
     //Number of the deck.
     private int deckNumber;

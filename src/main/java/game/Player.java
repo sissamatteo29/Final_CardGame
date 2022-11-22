@@ -10,7 +10,7 @@ public class Player implements Runnable {
     private Game game;
     private int preferredCards;
     private ArrayList<Card> hand = new ArrayList<>();
-    private CardDeckInterface takeDeck, giveDeck;
+    private CardDeck takeDeck, giveDeck;
     private Boolean gameOver = false;
     private ArrayList<String> log = new ArrayList<>();
 
@@ -260,7 +260,7 @@ public class Player implements Runnable {
      * Returns the deck the player takes cards from, used for testing.
      * @return The CardDeck object of the player's left deck.
      */
-    public CardDeckInterface getTakeDeck() {
+    public CardDeck getTakeDeck() {
         return takeDeck;
     }
 
@@ -268,7 +268,7 @@ public class Player implements Runnable {
      * Sets the deck the player is going to take cards from.
      * @param takeDeck The deck object of the player's left deck.
      */
-    public void setTakeDeck(CardDeckInterface takeDeck) {
+    public void setTakeDeck(CardDeck takeDeck) {
         this.takeDeck = takeDeck;
     }
 
@@ -276,7 +276,7 @@ public class Player implements Runnable {
      * Returns the deck the player discards on to, used for test purposes.
      * @return The deck object of the player's right deck.
      */
-    public CardDeckInterface getGiveDeck() {
+    public CardDeck getGiveDeck() {
         return giveDeck;
     }
 
@@ -284,7 +284,7 @@ public class Player implements Runnable {
      * Sets the deck the player will discard cards on to.
      * @param giveDeck The deck object of the player's right deck.
      */
-    public void setGiveDeck(CardDeckInterface giveDeck) {
+    public void setGiveDeck(CardDeck giveDeck) {
         this.giveDeck = giveDeck;
     }
 

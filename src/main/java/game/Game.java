@@ -65,7 +65,7 @@ public class Game {
         }
 
         //Creates the logs for the decks.
-        for (CardDeckInterface deck: decks){
+        for (CardDeck deck: decks){
             generateLog("deck" + deck.getDeckNumber() + "_output.txt", deck.getCardsString());
         }
 

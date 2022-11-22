@@ -8,6 +8,6 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({PlayerReorderHandTest.class, PlayerTakeAndDiscardTest.class, PlayerMinorMethodsTest.class})
-public class PlayerTestSuite {
+public class  PlayerTestSuite {
 
 }
