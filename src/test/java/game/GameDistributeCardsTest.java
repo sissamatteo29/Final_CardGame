@@ -22,9 +22,18 @@ public class GameDistributeCardsTest {
         game1 = new Game(); //5 players
         game2 = new Game(); //2 players
 
+        /*
+        This nested for loop is just used to create a specific pack that will distribute the same hand to each player of the game. The hand is "1 2 3 4".
+        The decks will receive the sequence of cards "4 3 2 1" because the giveDeck() method to add cards inside a CardDeck adds card at the beginning
+        of the data structure.
+         */
         Card[] pack1 = new Card[40];
-        for (int i = 0; i < 40; i++){
-            pack1[i] = new Card(3);
+        for(int i = 0; i < 2; i++){
+            for(int j = 0; j < 4; j++){
+                for(int k = 0; k < 5; k++){
+                    pack1[(i * 20) + (5 * j + k)] = new Card(j + 1);
+                }
+            }
         }
 
         Player[] players1 = new Player[5];
@@ -39,9 +48,17 @@ public class GameDistributeCardsTest {
         game1.setPack(pack1);
         game1.setPlayers(players1);
 
+        /*
+        These nested for loops are equivalent to the previous ones and are used to give each player the hand "1 2 3 4" and
+        each deck the sequence "4 3 2 1"
+         */
         Card[] pack2 = new Card[16];
-        for (int i = 0; i < 16; i++){
-            pack2[i] = new Card(8);
+        for (int i = 0; i < 2; i++){
+            for (int j = 0; j < 4; j++){
+                for (int k = 0; k < 2; k++){
+                    pack2[(i * 8) + (2 * j + k)] = new Card(j + 1);
+                }
+            }
         }
 
         Player[] players2 = new Player[2];
@@ -69,9 +86,15 @@ public class GameDistributeCardsTest {
         assertEquals(4, game1.getPlayers()[3].getHand().size());
         assertEquals(4, game1.getPlayers()[4].getHand().size());
 
-        /* Verifies that some cards in players' hands are equal to 3 (game1 was set up with a deck of cards with number 3 to simplify) */
+        /* Verifies that the sequence of cards in some random players' hands is "1 2 3 4" */
+        assertEquals(1, game1.getPlayers()[0].getHand().get(0).getNumber());
+        assertEquals(2, game1.getPlayers()[0].getHand().get(1).getNumber());
+        assertEquals(3, game1.getPlayers()[0].getHand().get(2).getNumber());
+        assertEquals(4, game1.getPlayers()[0].getHand().get(3).getNumber());
+        assertEquals(1, game1.getPlayers()[3].getHand().get(0).getNumber());
+        assertEquals(2, game1.getPlayers()[3].getHand().get(1).getNumber());
         assertEquals(3, game1.getPlayers()[3].getHand().get(2).getNumber());
-        assertEquals(3, game1.getPlayers()[0].getHand().get(3).getNumber());
+        assertEquals(4, game1.getPlayers()[3].getHand().get(3).getNumber());
     }
 
     @Test
@@ -86,9 +109,15 @@ public class GameDistributeCardsTest {
         assertEquals(4, game1.getDecks()[3].getCards().size());
         assertEquals(4, game1.getDecks()[4].getCards().size());
 
-        /* Cheks that some random cards have number 3 */
-        assertEquals(3, game1.getDecks()[0].getCards().get(2).getNumber());
-        assertEquals(3, game1.getDecks()[0].getCards().get(3).getNumber());
+        /* Verifies from some random decks that the sequence of distributed cards is "4 3 2 1" */
+        assertEquals(4, game1.getDecks()[1].getCards().get(0).getNumber());
+        assertEquals(3, game1.getDecks()[1].getCards().get(1).getNumber());
+        assertEquals(2, game1.getDecks()[1].getCards().get(2).getNumber());
+        assertEquals(1, game1.getDecks()[1].getCards().get(3).getNumber());
+        assertEquals(4, game1.getDecks()[4].getCards().get(0).getNumber());
+        assertEquals(3, game1.getDecks()[4].getCards().get(1).getNumber());
+        assertEquals(2, game1.getDecks()[4].getCards().get(2).getNumber());
+        assertEquals(1, game1.getDecks()[4].getCards().get(3).getNumber());
     }
 
     @Test
@@ -100,9 +129,15 @@ public class GameDistributeCardsTest {
         assertEquals(4, game2.getPlayers()[0].getHand().size());
         assertEquals(4, game2.getPlayers()[1].getHand().size());
 
-        /* Verifies that some cards in players' hands are equal to 8 (game2 was set up with a deck of cards with number 3 to simplify) */
-        assertEquals(8, game2.getPlayers()[1].getHand().get(2).getNumber());
-        assertEquals(8, game2.getPlayers()[0].getHand().get(3).getNumber());
+        /* Verifies that the sequence of cards in the players' hands is "1 2 3 4" */
+        assertEquals(1, game2.getPlayers()[0].getHand().get(0).getNumber());
+        assertEquals(2, game2.getPlayers()[0].getHand().get(1).getNumber());
+        assertEquals(3, game2.getPlayers()[0].getHand().get(2).getNumber());
+        assertEquals(4, game2.getPlayers()[0].getHand().get(3).getNumber());
+        assertEquals(1, game2.getPlayers()[1].getHand().get(0).getNumber());
+        assertEquals(2, game2.getPlayers()[1].getHand().get(1).getNumber());
+        assertEquals(3, game2.getPlayers()[1].getHand().get(2).getNumber());
+        assertEquals(4, game2.getPlayers()[1].getHand().get(3).getNumber());
     }
 
     @Test
@@ -114,8 +149,14 @@ public class GameDistributeCardsTest {
         assertEquals(4, game2.getDecks()[0].getCards().size());
         assertEquals(4, game2.getDecks()[1].getCards().size());
 
-        /* Checks that some random cards have number 8 */
-        assertEquals(8, game2.getDecks()[0].getCards().get(2).getNumber());
-        assertEquals(8, game2.getDecks()[0].getCards().get(3).getNumber());
+        /* Verifies from the decks that the sequence of distributed cards is "4 3 2 1" */
+        assertEquals(4, game2.getDecks()[1].getCards().get(0).getNumber());
+        assertEquals(3, game2.getDecks()[1].getCards().get(1).getNumber());
+        assertEquals(2, game2.getDecks()[1].getCards().get(2).getNumber());
+        assertEquals(1, game2.getDecks()[1].getCards().get(3).getNumber());
+        assertEquals(4, game2.getDecks()[0].getCards().get(0).getNumber());
+        assertEquals(3, game2.getDecks()[0].getCards().get(1).getNumber());
+        assertEquals(2, game2.getDecks()[0].getCards().get(2).getNumber());
+        assertEquals(1, game2.getDecks()[0].getCards().get(3).getNumber());
     }
 }
